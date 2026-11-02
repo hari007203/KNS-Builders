@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Manrope', sans-serif;
+  }
+
+  body {
+    background-color: #101820;
+    color: #F5F1E9;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar for luxury feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #101820;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2A3645;
+    border-radius: 4px;
+    border: 2px solid #101820;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C6A46A;
+  }
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(16, 24, 32, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(198, 164, 106, 0.18);
+}
+
+.glass-panel-light {
+  background: rgba(245, 241, 233, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(198, 164, 106, 0.25);
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px rgba(198, 164, 106, 0.15);
+}
+
+.gold-border {
+  border: 1px solid rgba(198, 164, 106, 0.3);
+}
+
+.gold-border-strong {
+  border: 1px solid #C6A46A;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFF1D0 0%, #C6A46A 60%, #99733D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
