@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Calculator, Check, ArrowRight, Info, Sparkles, Building, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Calculator, Check, ArrowRight } from 'lucide-react';
 import { CONSTRUCTION_PACKAGES, BRAND_INFO } from '../data/mockData';
 
 export const CostCalculator: React.FC = () => {
@@ -45,90 +46,111 @@ I would like to request a detailed site survey and finalized quotation for my pl
   };
 
   return (
-    <section id="packages" className="py-28 bg-navy relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="packages" className="py-20 sm:py-28 bg-[#101820] relative overflow-hidden">
+      {/* Background Architectural Grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(#C6A46A_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.03] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
-        <div className="max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/30 bg-navy-800 text-xs font-mono uppercase tracking-widest text-gold mb-3">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl mb-12 sm:mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/30 bg-navy-800 text-[11px] sm:text-xs font-mono uppercase tracking-widest text-gold mb-3 shadow-md">
             Indicative Turnkey Pricing & Estimation
           </div>
           <h2 className="font-serif text-3xl sm:text-5xl text-ivory font-light leading-tight">
             Transparent Pricing. <br />
             <span className="gold-gradient-text italic font-normal">Zero Hidden Surprises.</span>
           </h2>
-          <p className="text-silver text-sm sm:text-base mt-4 font-light">
+          <p className="text-silver text-sm sm:text-base mt-3 sm:mt-4 font-light leading-relaxed">
             All prices include complete civil materials, skilled engineering labor, and structural compliance. Indicative rates subject to site topography, soil conditions, and final client specifications.
           </p>
-        </div>
+        </motion.div>
 
-        {/* 3 Package Comparison Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-          {CONSTRUCTION_PACKAGES.map((pkg) => {
+        {/* 3 Package Comparison Cards with Staggered Entrance */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-20">
+          {CONSTRUCTION_PACKAGES.map((pkg, idx) => {
             const isSelected = selectedPackageId === pkg.id;
             return (
-              <div
+              <motion.div
                 key={pkg.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: idx * 0.1 }}
+                whileHover={{ y: -6 }}
                 onClick={() => setSelectedPackageId(pkg.id as any)}
-                className={`relative rounded-xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+                className={`relative rounded-xl p-5 sm:p-8 transition-all duration-300 flex flex-col justify-between cursor-pointer touch-manipulation ${
                   isSelected
-                    ? 'bg-charcoal border-2 border-gold shadow-2xl scale-[1.02]'
-                    : 'bg-navy-800/80 border border-gold/20 hover:border-gold/50'
+                    ? 'bg-charcoal border-2 border-gold shadow-2xl scale-[1.01] sm:scale-[1.02] shadow-gold/15'
+                    : 'bg-navy-800/80 border border-gold/20 hover:border-gold/50 shadow-lg'
                 }`}
               >
                 {pkg.badge && (
-                  <div className="absolute -top-3 left-6 px-3 py-1 bg-gold text-navy font-bold text-[10px] uppercase tracking-wider rounded-full shadow-md">
+                  <div className="absolute -top-3 left-5 sm:left-6 px-3 py-1 bg-gold text-navy font-bold text-[10px] uppercase tracking-wider rounded-full shadow-md">
                     {pkg.badge}
                   </div>
                 )}
 
-                <div className="space-y-4">
+                <div className="space-y-3.5 sm:space-y-4">
                   <div className="space-y-1">
-                    <h3 className="font-serif text-2xl text-ivory">{pkg.name}</h3>
+                    <h3 className="font-serif text-xl sm:text-2xl text-ivory">{pkg.name}</h3>
                     <p className="text-xs text-silver font-light">{pkg.tagline}</p>
                   </div>
 
-                  <div className="p-4 rounded-lg bg-navy/80 border border-gold/15">
+                  <div className="p-3.5 sm:p-4 rounded-lg bg-navy/80 border border-gold/15">
                     <div className="flex items-baseline gap-2">
-                      <span className="font-mono text-3xl font-bold text-gold">
+                      <span className="font-mono text-2xl sm:text-3xl font-bold text-gold">
                         ₹{pkg.minRate} – ₹{pkg.maxRate}
                       </span>
                       <span className="text-xs text-silver font-mono">/ sq.ft</span>
                     </div>
-                    <span className="text-[11px] text-silver block mt-1">Materials + Civil Labor Included</span>
+                    <span className="text-[10px] sm:text-[11px] text-silver block mt-1">Materials + Civil Labor Included</span>
                   </div>
 
-                  <div className="space-y-2.5 pt-2">
-                    <span className="text-[11px] uppercase tracking-wider text-gold font-mono block">
+                  <div className="space-y-2 pt-1 sm:pt-2">
+                    <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gold font-mono block">
                       Package Inclusions:
                     </span>
                     {pkg.features.slice(0, 6).map((feat, i) => (
                       <div key={i} className="flex items-start gap-2 text-xs text-ivory/80">
-                        <Check className="w-3.5 h-3.5 text-gold flex-shrink-0 mt-0.5" />
+                        <Check className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-gold/15">
+                <div className="pt-4 sm:pt-6 mt-4 sm:mt-6 border-t border-gold/15">
                   <button
-                    className={`w-full py-2.5 rounded text-xs uppercase tracking-wider font-semibold transition-all duration-200 cursor-pointer ${
+                    className={`w-full py-2.5 sm:py-3 rounded text-xs uppercase tracking-wider font-semibold transition-all duration-200 cursor-pointer min-h-[42px] touch-manipulation ${
                       isSelected
-                        ? 'bg-gold text-navy shadow-md shadow-gold/20'
+                        ? 'bg-gold text-navy shadow-md shadow-gold/20 font-bold'
                         : 'border border-gold/30 text-gold hover:border-gold'
                     }`}
                   >
                     {isSelected ? 'Selected for Calculator' : 'Select Package'}
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Interactive Construction Cost Calculator */}
-        <div id="calculator" className="glass-panel rounded-2xl p-6 sm:p-10 border border-gold/30 shadow-2xl relative overflow-hidden">
-          <div className="max-w-2xl mb-8">
+        <motion.div
+          id="calculator"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="glass-panel rounded-2xl p-5 sm:p-10 border border-gold/30 shadow-2xl relative overflow-hidden"
+        >
+          <div className="max-w-2xl mb-6 sm:mb-8">
             <div className="flex items-center gap-2 text-gold text-xs font-mono uppercase tracking-widest mb-1">
               <Calculator className="w-4 h-4" />
               <span>Real-Time Estimation Tool</span>
@@ -136,17 +158,17 @@ I would like to request a detailed site survey and finalized quotation for my pl
             <h3 className="font-serif text-2xl sm:text-4xl text-ivory">
               Interactive Construction Cost Calculator
             </h3>
-            <p className="text-silver text-sm mt-1">
+            <p className="text-silver text-xs sm:text-sm mt-1">
               Adjust your desired built-up area and select architectural interior options to see an estimated budget range.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Input Controls (7 cols) */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-5 sm:space-y-6">
               {/* Category Selector */}
               <div>
-                <label className="block text-xs uppercase tracking-wider text-silver mb-2 font-mono">
+                <label className="block text-[11px] sm:text-xs uppercase tracking-wider text-silver mb-2 font-mono">
                   1. Construction Category:
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -155,9 +177,9 @@ I would like to request a detailed site survey and finalized quotation for my pl
                       key={cat}
                       type="button"
                       onClick={() => setSelectedPackageId(cat)}
-                      className={`py-2 px-3 rounded text-xs font-medium capitalize transition-all cursor-pointer ${
+                      className={`py-2.5 px-2 rounded text-xs font-medium capitalize transition-all cursor-pointer min-h-[42px] touch-manipulation ${
                         selectedPackageId === cat
-                          ? 'bg-gold text-navy font-bold'
+                          ? 'bg-gold text-navy font-bold shadow-md'
                           : 'bg-navy-800 text-silver border border-silver/20 hover:border-gold/40'
                       }`}
                     >
@@ -167,156 +189,118 @@ I would like to request a detailed site survey and finalized quotation for my pl
                 </div>
               </div>
 
-              {/* Built-up Area Slider */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <label className="text-xs uppercase tracking-wider text-silver font-mono">
-                    2. Built-Up Area (Square Feet):
+              {/* Built-up area slider */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="text-[11px] sm:text-xs uppercase tracking-wider text-silver font-mono">
+                    2. Planned Built-Up Area:
                   </label>
-                  <span className="font-mono text-lg font-bold text-gold bg-navy-800 px-3 py-1 rounded border border-gold/30">
-                    {builtUpArea.toLocaleString()} SFT
+                  <span className="font-mono text-gold font-bold text-base sm:text-lg">
+                    {builtUpArea.toLocaleString()} Sq.Ft.
                   </span>
                 </div>
                 <input
                   type="range"
-                  min="600"
-                  max="10000"
-                  step="50"
+                  min={800}
+                  max={8000}
+                  step={100}
                   value={builtUpArea}
                   onChange={(e) => setBuiltUpArea(Number(e.target.value))}
-                  className="w-full accent-[#C6A46A] h-2 bg-navy-900 rounded-lg cursor-pointer"
+                  className="w-full accent-[#C6A46A] h-3 bg-navy-800 rounded-lg cursor-pointer touch-pan-x"
                 />
-                <div className="flex justify-between text-[11px] text-silver font-mono">
-                  <span>600 SFT (Small Independent)</span>
-                  <span>2,400 SFT (Standard Duplex)</span>
-                  <span>10,000 SFT (Luxury Estate)</span>
+                <div className="flex justify-between text-[9px] sm:text-[10px] text-silver/60 font-mono mt-1">
+                  <span>800 SFT</span>
+                  <span>4,000 SFT</span>
+                  <span>8,000 SFT</span>
                 </div>
               </div>
 
-              {/* Optional Add-Ons */}
-              <div className="space-y-3 pt-2 border-t border-gold/15">
-                <label className="block text-xs uppercase tracking-wider text-silver font-mono">
-                  3. Optional Architectural Add-Ons:
+              {/* Add-ons checkboxes with 44px+ tap targets */}
+              <div>
+                <label className="block text-[11px] sm:text-xs uppercase tracking-wider text-silver mb-2.5 font-mono">
+                  3. Key Architectural & Interior Inclusions:
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <label className="flex items-center gap-2.5 p-3 rounded bg-navy-800/80 border border-gold/15 cursor-pointer hover:border-gold/30">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 text-xs">
+                  <label className="flex items-center gap-2.5 p-3 rounded bg-navy/60 border border-gold/15 cursor-pointer hover:border-gold/40 touch-manipulation min-h-[44px]">
                     <input
                       type="checkbox"
                       checked={includeModularKitchen}
                       onChange={(e) => setIncludeModularKitchen(e.target.checked)}
                       className="accent-[#C6A46A] w-4 h-4 rounded"
                     />
-                    <div className="text-xs">
-                      <span className="text-ivory block font-medium">Modular Acrylic Kitchen</span>
-                      <span className="text-silver text-[10px]">+ ₹2.50 Lakhs</span>
-                    </div>
+                    <span className="text-ivory text-xs sm:text-sm">Factory Modular Kitchen</span>
                   </label>
-
-                  <label className="flex items-center gap-2.5 p-3 rounded bg-navy-800/80 border border-gold/15 cursor-pointer hover:border-gold/30">
+                  <label className="flex items-center gap-2.5 p-3 rounded bg-navy/60 border border-gold/15 cursor-pointer hover:border-gold/40 touch-manipulation min-h-[44px]">
                     <input
                       type="checkbox"
                       checked={includeFullWardrobes}
                       onChange={(e) => setIncludeFullWardrobes(e.target.checked)}
                       className="accent-[#C6A46A] w-4 h-4 rounded"
                     />
-                    <div className="text-xs">
-                      <span className="text-ivory block font-medium">Full Bedroom Wardrobes & Lofts</span>
-                      <span className="text-silver text-[10px]">+ ₹3.50 Lakhs</span>
-                    </div>
+                    <span className="text-ivory text-xs sm:text-sm">Full Bedroom Wardrobes</span>
                   </label>
-
-                  <label className="flex items-center gap-2.5 p-3 rounded bg-navy-800/80 border border-gold/15 cursor-pointer hover:border-gold/30">
+                  <label className="flex items-center gap-2.5 p-3 rounded bg-navy/60 border border-gold/15 cursor-pointer hover:border-gold/40 touch-manipulation min-h-[44px]">
                     <input
                       type="checkbox"
                       checked={includeFalseCeiling}
                       onChange={(e) => setIncludeFalseCeiling(e.target.checked)}
                       className="accent-[#C6A46A] w-4 h-4 rounded"
                     />
-                    <div className="text-xs">
-                      <span className="text-ivory block font-medium">Gypsum False Ceiling & Cove</span>
-                      <span className="text-silver text-[10px]">
-                        {selectedPackageId === 'standard' ? '+ ₹110/SFT' : 'Included in Package'}
-                      </span>
-                    </div>
+                    <span className="text-ivory text-xs sm:text-sm">Gypsum Cove False Ceilings</span>
                   </label>
-
-                  <label className="flex items-center gap-2.5 p-3 rounded bg-navy-800/80 border border-gold/15 cursor-pointer hover:border-gold/30">
+                  <label className="flex items-center gap-2.5 p-3 rounded bg-navy/60 border border-gold/15 cursor-pointer hover:border-gold/40 touch-manipulation min-h-[44px]">
                     <input
                       type="checkbox"
                       checked={includeSolarPlant}
                       onChange={(e) => setIncludeSolarPlant(e.target.checked)}
                       className="accent-[#C6A46A] w-4 h-4 rounded"
                     />
-                    <div className="text-xs">
-                      <span className="text-ivory block font-medium">3kW Rooftop Solar System</span>
-                      <span className="text-silver text-[10px]">+ ₹2.20 Lakhs</span>
-                    </div>
+                    <span className="text-ivory text-xs sm:text-sm">3kW Rooftop Solar System</span>
                   </label>
                 </div>
               </div>
             </div>
 
-            {/* Estimated Output Panel (5 cols) */}
-            <div className="lg:col-span-5 bg-charcoal p-6 sm:p-8 rounded-xl border border-gold/40 shadow-xl space-y-6">
+            {/* Estimated Quote Result Box (5 cols) */}
+            <div className="lg:col-span-5 bg-navy-900/90 rounded-xl p-5 sm:p-8 border border-gold/40 shadow-2xl space-y-5 sm:space-y-6">
+              <span className="text-[10px] sm:text-xs uppercase tracking-widest text-gold font-mono block">
+                Estimated Project Cost Range
+              </span>
+
               <div className="space-y-1">
-                <span className="text-xs uppercase tracking-widest text-silver font-mono block">
-                  Estimated Investment Range
-                </span>
-                <div className="font-mono text-3xl sm:text-4xl font-bold text-gold">
+                <div className="font-mono text-2xl sm:text-4xl text-ivory font-bold">
                   {formatLakhs(totalMin)} – {formatLakhs(totalMax)}
                 </div>
-                <span className="text-xs text-silver">
-                  For {builtUpArea.toLocaleString()} SFT • {activePackage.name}
+                <span className="text-[11px] sm:text-xs text-silver block">
+                  Indicative Turnkey Estimate for {builtUpArea.toLocaleString()} SFT
                 </span>
               </div>
 
-              {/* Cost Breakdown Details */}
-              <div className="space-y-2 py-3 border-y border-gold/15 text-xs">
-                <div className="flex justify-between text-silver">
-                  <span>Base Civil Construction:</span>
-                  <span className="text-ivory font-mono">
-                    ₹{((builtUpArea * activePackage.minRate) / 100000).toFixed(2)}L – ₹{((builtUpArea * activePackage.maxRate) / 100000).toFixed(2)}L
-                  </span>
+              <div className="space-y-2 text-xs border-t border-gold/15 pt-4 text-silver">
+                <div className="flex justify-between">
+                  <span>Selected Package:</span>
+                  <span className="text-ivory font-medium">{activePackage.name}</span>
                 </div>
-                <div className="flex justify-between text-silver">
-                  <span>Selected Interior Add-ons:</span>
-                  <span className="text-ivory font-mono">
-                    ₹{(addOnsCost / 100000).toFixed(2)} Lakhs
-                  </span>
+                <div className="flex justify-between">
+                  <span>Base Rate:</span>
+                  <span className="text-ivory font-mono">₹{activePackage.minRate} - ₹{activePackage.maxRate}/sft</span>
                 </div>
-                <div className="flex justify-between text-silver">
-                  <span>Turnkey Material Standard:</span>
-                  <span className="text-gold font-mono">Tata Fe550D / UltraTech</span>
+                <div className="flex justify-between">
+                  <span>Interior Inclusions:</span>
+                  <span className="text-gold font-mono">₹{(addOnsCost / 100000).toFixed(2)} Lakhs</span>
                 </div>
               </div>
 
-              {/* Disclaimer */}
-              <div className="flex items-start gap-2 text-[11px] text-silver/80 leading-relaxed bg-navy/60 p-3 rounded border border-gold/15">
-                <Info className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
-                <span>
-                  <strong>Indicative Pricing Notice:</strong> These figures are calculated on standard architectural parameters. Actual quotation depends on site soil strata, foundation depth, elevation architectural treatments, and final material choices confirmed by KNS.
-                </span>
-              </div>
-
-              {/* CTA Action Buttons */}
-              <div className="space-y-2 pt-2">
-                <button
-                  onClick={handleSendWhatsAppQuote}
-                  className="w-full py-3.5 bg-gold hover:bg-gold-500 text-navy font-semibold text-xs uppercase tracking-widest rounded transition-all duration-300 shadow-lg shadow-gold/20 flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <span>Request Detailed Quotation</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <a
-                  href="#contact"
-                  className="w-full py-2.5 border border-gold/30 hover:border-gold text-ivory hover:text-gold text-xs uppercase tracking-wider rounded block text-center transition-colors"
-                >
-                  Schedule Site Survey
-                </a>
-              </div>
+              <button
+                onClick={handleSendWhatsAppQuote}
+                className="w-full py-3.5 bg-gradient-to-r from-gold via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold text-navy font-semibold text-xs uppercase tracking-widest rounded-lg transition-all duration-300 shadow-xl shadow-gold/20 flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[46px]"
+              >
+                <span>Request Site Survey for this Plan</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
