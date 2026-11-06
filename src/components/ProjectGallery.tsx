@@ -59,49 +59,56 @@ export const ProjectGallery: React.FC = () => {
   };
 
   return (
-    <section id="gallery" className="py-20 sm:py-28 bg-[#12161E] relative overflow-hidden">
+    <section id="gallery" className="py-24 sm:py-32 bg-[#0C1017] relative overflow-hidden border-t border-gold/10">
       {/* Background Architectural Grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#C6A46A_1px,transparent_1px)] [background-size:36px_36px] opacity-[0.025] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#C6A46A_1px,transparent_1px)] [background-size:48px_48px] opacity-[0.03] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
+        {/* Editorial Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-5 sm:gap-6"
+          className="mb-10 sm:mb-14"
         >
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/30 bg-navy text-[11px] sm:text-xs font-mono uppercase tracking-widest text-gold mb-3 shadow-md">
-              Authentic KNS Project Portfolio
-            </div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-ivory font-light leading-tight">
-              Architectural Craftsmanship <br />
-              <span className="gold-gradient-text italic font-normal">Captured in Every Detail.</span>
-            </h2>
+          <div className="flex items-center gap-3 mb-4">
+            <span className="font-mono text-[10px] sm:text-xs text-gold tracking-[0.25em] uppercase font-medium">
+              INDEX 08 // ARCHITECTURAL REPERTORY
+            </span>
+            <div className="h-px bg-gold/20 w-12 sm:w-20" />
+            <span className="text-[10px] font-mono text-silver/60 tracking-wider">REAL ON-SITE PHOTOGRAPHY</span>
           </div>
-          <p className="text-silver text-sm sm:text-base max-w-md font-light leading-relaxed">
-            Explore authentic high-resolution photography of completed structures, false ceilings, luxury wardrobes, and modular kitchens executed by KNS.
-          </p>
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-ivory font-light leading-[1.15] tracking-tight">
+                Architectural Craftsmanship <br />
+                <span className="gold-gradient-text italic font-normal">Captured in Every Detail.</span>
+              </h2>
+            </div>
+            <p className="text-silver text-sm sm:text-base max-w-md font-light leading-relaxed border-l border-gold/25 pl-4 sm:pl-6">
+              Authentic high-resolution documentation of completed civil elevations, false ceilings, luxury wardrobes, and modular kitchens executed directly by KNS.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Category Filter Pills - Mobile Touch Scrollable */}
+        {/* Category Filter Bar */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-10 no-scrollbar touch-pan-x"
+          className="flex items-center gap-2 overflow-x-auto pb-3 mb-10 sm:mb-12 no-scrollbar touch-pan-x border-b border-gold/15"
         >
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-3.5 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-mono uppercase tracking-wider whitespace-nowrap transition-all duration-300 cursor-pointer min-h-[38px] flex items-center touch-manipulation ${
+              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider whitespace-nowrap transition-colors cursor-pointer min-h-[40px] flex items-center touch-manipulation border ${
                 activeCategory === cat.id
-                  ? 'bg-gold text-navy font-bold shadow-lg shadow-gold/20 scale-102'
-                  : 'bg-navy-800 text-silver border border-gold/20 hover:border-gold/50 hover:text-ivory'
+                  ? 'bg-gold text-navy font-bold border-gold'
+                  : 'bg-[#121720] text-silver border-white/5 hover:border-gold/40'
               }`}
             >
               {cat.label}
@@ -109,57 +116,56 @@ export const ProjectGallery: React.FC = () => {
           ))}
         </motion.div>
 
-        {/* Gallery Grid with Northwall Top-Down Unfolding Animation */}
+        {/* Gallery Grid with Asymmetric Editorial Rhythms */}
         <motion.div
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item, index) => (
               <motion.div
                 layout
                 key={item.id}
-                initial={{ opacity: 0, clipPath: 'inset(0% 0% 85% 0%)', y: 30 }}
-                whileInView={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)', y: 0 }}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{
-                  duration: 0.7,
-                  delay: Math.min((index % 6) * 0.06, 0.3),
+                  duration: 0.6,
+                  delay: Math.min((index % 6) * 0.05, 0.25),
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                whileHover={{ y: -6 }}
                 onClick={() => handleOpenLightbox(item)}
-                className="group relative rounded-xl overflow-hidden bg-charcoal border border-gold/20 hover:border-gold/70 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-gold/15 cursor-pointer touch-manipulation"
+                className="group relative bg-[#121720] border border-gold/20 hover:border-gold/60 transition-colors shadow-2xl cursor-pointer touch-manipulation"
               >
-                {/* Image Container with Northwall Top-Down Reveal */}
-                <div className="relative h-64 sm:h-80 overflow-hidden bg-navy-900">
+                {/* Image Container */}
+                <div className="relative h-64 sm:h-80 overflow-hidden bg-black">
                   <img
                     src={item.src}
                     alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/30 to-transparent opacity-85 group-hover:opacity-65 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121720] via-transparent to-transparent opacity-85 group-hover:opacity-65 transition-opacity" />
 
                   {/* Top Category Badge */}
-                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded bg-navy/85 backdrop-blur-md border border-gold/30 text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-gold shadow-md">
+                  <div className="absolute top-3 left-3 px-2.5 py-1 bg-black/70 border border-gold/30 text-[9px] font-mono uppercase tracking-wider text-gold">
                     {item.categoryLabel}
                   </div>
 
                   {/* Maximize Icon */}
-                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-navy/85 backdrop-blur-md border border-gold/40 flex items-center justify-center text-ivory opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg">
+                  <div className="absolute top-3 right-3 w-8 h-8 bg-black/70 border border-gold/40 flex items-center justify-center text-ivory opacity-80 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                     <Maximize2 className="w-3.5 h-3.5 text-gold" />
                   </div>
 
                   {/* Bottom Title & Specs */}
-                  <div className="absolute bottom-3.5 left-3.5 right-3.5 sm:bottom-4 sm:left-4 sm:right-4 space-y-1.5 sm:space-y-2">
+                  <div className="absolute bottom-4 left-4 right-4 space-y-2">
                     <h3 className="font-serif text-base sm:text-lg text-ivory font-medium group-hover:text-gold transition-colors line-clamp-1">
                       {item.title}
                     </h3>
-                    <div className="flex flex-wrap gap-1 sm:gap-1.5">
+                    <div className="flex flex-wrap gap-1.5">
                       {item.specs.slice(0, 3).map((spec, i) => (
-                        <span key={i} className="text-[9px] sm:text-[10px] px-2 py-0.5 rounded bg-navy/85 border border-gold/20 text-silver shadow-sm">
+                        <span key={i} className="text-[10px] px-2 py-0.5 bg-black/70 border border-white/10 text-silver font-mono">
                           {spec}
                         </span>
                       ))}
@@ -172,7 +178,7 @@ export const ProjectGallery: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Fullscreen Lightbox Modal - Mobile Touch Optimized */}
+      {/* Fullscreen Lightbox Modal */}
       <AnimatePresence>
         {lightboxImage && (
           <motion.div
@@ -180,28 +186,28 @@ export const ProjectGallery: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setLightboxImage(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-navy-950/96 backdrop-blur-xl p-3 sm:p-6"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/92 backdrop-blur-md p-4 sm:p-6"
           >
-            {/* Close Button - 44px tap target */}
+            {/* Close Button */}
             <button
               onClick={() => setLightboxImage(null)}
-              className="absolute top-4 right-4 z-30 p-2.5 rounded-full bg-navy border border-gold/40 text-silver hover:text-gold transition-colors cursor-pointer shadow-lg min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
+              className="absolute top-4 right-4 z-30 p-2.5 bg-[#121720] border border-gold/40 text-silver hover:text-gold transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
               aria-label="Close Fullscreen View"
             >
               <X className="w-6 h-6" />
             </button>
 
-            {/* Previous / Next Arrow Controls - Accessible on Mobile */}
+            {/* Previous / Next Controls */}
             <button
               onClick={handlePrev}
-              className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 p-2.5 sm:p-3 rounded-full bg-navy/90 border border-gold/40 text-silver hover:text-gold transition-colors cursor-pointer shadow-xl min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
+              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 p-3 bg-[#121720]/90 border border-gold/40 text-silver hover:text-gold transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
               aria-label="Previous Project Reference"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 p-2.5 sm:p-3 rounded-full bg-navy/90 border border-gold/40 text-silver hover:text-gold transition-colors cursor-pointer shadow-xl min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
+              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 p-3 bg-[#121720]/90 border border-gold/40 text-silver hover:text-gold transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
               aria-label="Next Project Reference"
             >
               <ChevronRight className="w-6 h-6" />
@@ -209,15 +215,15 @@ export const ProjectGallery: React.FC = () => {
 
             {/* Modal Container */}
             <motion.div
-              initial={{ scale: 0.94, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.94, opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.25 }}
               onClick={(e) => e.stopPropagation()}
               className="max-w-5xl w-full flex flex-col items-center max-h-[92vh] overflow-y-auto px-2"
             >
               {/* Image Box */}
-              <div className="relative max-h-[55vh] sm:max-h-[68vh] overflow-hidden rounded-xl border border-gold/40 shadow-2xl bg-black/70 flex items-center justify-center">
+              <div className="relative max-h-[55vh] sm:max-h-[68vh] overflow-hidden border border-gold/40 bg-black flex items-center justify-center">
                 <img
                   src={lightboxImage.src}
                   alt={lightboxImage.title}
@@ -226,7 +232,7 @@ export const ProjectGallery: React.FC = () => {
                 />
 
                 {/* Floating Zoom Controls */}
-                <div className="absolute bottom-3 right-3 flex items-center gap-1.5 sm:gap-2 bg-navy/85 backdrop-blur-md px-2.5 sm:px-3 py-1 rounded-full border border-gold/30 shadow-lg">
+                <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-black/80 px-3 py-1 border border-gold/30">
                   <button
                     onClick={() => setZoomLevel((prev) => Math.min(2.5, prev + 0.25))}
                     className="text-silver hover:text-gold p-1 cursor-pointer min-w-[32px] min-h-[32px] flex items-center justify-center touch-manipulation"
@@ -234,7 +240,7 @@ export const ProjectGallery: React.FC = () => {
                   >
                     <ZoomIn className="w-4 h-4" />
                   </button>
-                  <span className="text-[10px] sm:text-[11px] font-mono text-gold px-1">
+                  <span className="text-[11px] font-mono text-gold px-1">
                     {Math.round(zoomLevel * 100)}%
                   </span>
                   <button
@@ -248,7 +254,7 @@ export const ProjectGallery: React.FC = () => {
               </div>
 
               {/* Captions & Technical Inclusions */}
-              <div className="mt-3 sm:mt-4 text-center max-w-2xl space-y-1.5 sm:space-y-2">
+              <div className="mt-4 text-center max-w-2xl space-y-2">
                 <span className="text-[10px] sm:text-xs uppercase tracking-widest text-gold font-mono">
                   {lightboxImage.categoryLabel}
                 </span>
@@ -258,9 +264,9 @@ export const ProjectGallery: React.FC = () => {
                 <p className="text-silver text-xs sm:text-sm font-light leading-relaxed">
                   {lightboxImage.description}
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-1.5">
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
                   {lightboxImage.specs.map((sp, idx) => (
-                    <span key={idx} className="text-[10px] sm:text-[11px] px-2.5 py-0.5 rounded bg-navy border border-gold/20 text-ivory/80 shadow-sm">
+                    <span key={idx} className="text-[10px] px-2.5 py-1 bg-[#121720] border border-white/10 text-ivory/80 font-mono">
                       {sp}
                     </span>
                   ))}

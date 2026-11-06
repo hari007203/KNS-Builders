@@ -62,17 +62,18 @@ export const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Typography & Key Facts (7 cols) */}
           <div className="lg:col-span-7 space-y-5 sm:space-y-6">
-            {/* Tagline Badge */}
+            {/* Tagline Architectural Marker */}
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
-              className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full border border-gold/40 bg-navy/85 backdrop-blur-md shadow-lg"
+              className="flex items-center gap-3"
             >
-              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gold animate-pulse" />
-              <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-gold font-medium">
-                Hyderabad’s Premier Architectural Builders
+              <span className="font-mono text-[10px] sm:text-xs text-gold tracking-[0.25em] uppercase font-medium">
+                KNS PRACTICE // HYDERABAD
               </span>
+              <div className="h-px bg-gold/30 w-10 sm:w-16" />
+              <span className="text-[10px] font-mono text-silver/60 tracking-wider">EST. 2018</span>
             </motion.div>
 
             {/* Mobile-First Portrait Photograph Deck (Visible only on mobile/tablet screens < 1024px) */}
